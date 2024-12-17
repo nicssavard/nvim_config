@@ -41,7 +41,14 @@ require("lazy").setup({
 		{
 			"numToStr/Comment.nvim",
 			opts = {
-				-- add any options here
+	toggler = {
+            line = '<leader>/',
+            block = '<leader>bc',
+        },
+        opleader = {
+            line = '<leader>/',
+            block = '<leader>b',
+        },			-- add any options here
 			},
 		},
 		{
