@@ -27,6 +27,12 @@ vim.keymap.set("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = "Increase Window 
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
 
+
+-- Move throught the quick list
+vim.keymap.set("n", "<leader>l", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<leader>h", "<cmd>cprev<CR>")
+
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 -- Highlight Yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",

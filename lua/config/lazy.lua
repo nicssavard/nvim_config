@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -30,13 +30,69 @@ require("lazy").setup({
 			lazy = false,
 			priority = 1000,
 			config = function()
-				vim
-				    .cmd.colorscheme "moonfly"
-			end
+				vim.cmd.colorscheme("moonfly")
+			end,
 		},
 		{
 			"christoomey/vim-tmux-navigator",
 			lazy = false,
+		},
+		-- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+		{
+			"numToStr/Comment.nvim",
+			opts = {
+				-- add any options here
+			},
+		},
+		{
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			-- event = "InsertEnter",
+			config = function()
+				require("copilot").setup({
+					panel = {
+						enabled = true,
+						auto_refresh = false,
+						keymap = {
+							jump_prev = "[[",
+							jump_next = "]]",
+							accept = "<CR>",
+							refresh = "gr",
+							open = "<M-CR>",
+						},
+						layout = {
+							position = "bottom", -- | top | left | right
+							ratio = 0.4,
+						},
+					},
+					suggestion = {
+						enabled = true,
+						auto_trigger = true,
+						debounce = 75,
+						keymap = {
+							accept = "<C-l>",
+							accept_word = false,
+							accept_line = false,
+							next = "<M-]>",
+							prev = "<M-[>",
+							dismiss = "<C-]>",
+						},
+					},
+					filetypes = {
+						yaml = false,
+						markdown = false,
+						help = false,
+						gitcommit = false,
+						gitrebase = false,
+						hgcommit = false,
+						svn = false,
+						cvs = false,
+						["."] = false,
+					},
+					copilot_node_command = "node", -- Node.js version must be > 16.x
+					server_opts_overrides = {},
+				})
+			end,
 		},
 		-- import your plugins
 		{ import = "config.plugins" },
