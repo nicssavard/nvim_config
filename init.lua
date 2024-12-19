@@ -10,6 +10,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.keymap.set("n", "grn", vim.lsp.buf.rename, { desc = "Rename" })
 vim.keymap.set("n", "gra", vim.lsp.buf.code_action, { desc = "Code Action" })
 vim.keymap.set("n", "grr", vim.lsp.buf.references, { desc = "References" })
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show Diagnostics" })
 
 -- Splits
 vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical Split" })
@@ -42,6 +43,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+vim.opt.autoindent = true    -- Copy indentation from the previous line
+vim.opt.smartindent = true   -- Add extra indent for new lines in code blocks
+vim.opt.tabstop = 2          -- Number of spaces for a tab
+vim.opt.shiftwidth = 2       -- Number of spaces for auto-indent
+vim.opt.softtabstop = 2      -- Number of spaces to use for <Tab>
+vim.opt.expandtab = true     -- Use spaces instead of tabs
+
+        vim.api.nvim_set_keymap("n", "<leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
 -- Enable absolute line numbers
 vim.opt.number = true
 
@@ -66,9 +75,7 @@ local function setup_start_screen()
 		vim.api.nvim_buf_set_option(0, 'swapfile', false)
 		-- Define your custom message
 		local welcome_message = {
-			"        Welcome!         ",
-			"",
-			"",
+			"Welcome!",
 		}
 		-- Set the buffer content
 		vim.api.nvim_buf_set_lines(0, 0, -1, false, welcome_message)

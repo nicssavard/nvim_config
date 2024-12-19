@@ -95,8 +95,8 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				-- ensure_installed = { "tsserver", "lua_ls" }, -- Ensure correct LSP server names
-				ensure_installed = {  "lua_ls" }, -- Ensure correct LSP server names
+				ensure_installed = { "ts_ls", "lua_ls" }, -- Ensure correct LSP server names
+				-- ensure_installed = {  "lua_ls" }, -- Ensure correct LSP server names
 			})
 		end
 	},
@@ -115,7 +115,7 @@ return {
 			-- Common on_attach function without formatting
 			local on_attach = function(client, bufnr)
 				-- Disable formatting for tsserver to let null-ls handle it
-				if client.name == "tsserver" then
+				if client.name == "ts_ls" then
 					client.server_capabilities.document_formatting = false
 					client.server_capabilities.document_range_formatting = false
 				end
@@ -139,7 +139,7 @@ return {
 			end
 
 			-- Setup LSP servers
-			local servers = { "tsserver", "lua_ls" }
+			local servers = { "ts_ls", "lua_ls" }
 
 			for _, server in ipairs(servers) do
 				lspconfig[server].setup({

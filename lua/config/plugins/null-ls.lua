@@ -23,24 +23,32 @@ return {
 				}),
 			},
 			on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
-					-- Create an autocommand group for formatting
-					vim.api.nvim_create_augroup("Format", { clear = true })
+				-- Autoformat on save
+				-- if client.supports_method("textDocument/formatting") then
+				-- 	vim.api.nvim_create_augroup("Format", { clear = true })
+				-- 	vim.api.nvim_create_autocmd("BufWritePre", {
+				-- 		group = "Format",
+				-- 		buffer = bufnr,
+				-- 		callback = function()
+				-- 			vim.lsp.buf.format({
+				-- 				bufnr = bufnr,
+				-- 				filter = function(format_client)
+				-- 					return format_client.name == "null-ls"
+				-- 				end,
+				-- 			})
+				-- 		end,
+				-- 	})
+				-- end
 
-					-- Format the buffer before saving
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = "Format",
-						buffer = bufnr,
-						callback = function()
-							vim.lsp.buf.format({
-								bufnr = bufnr,
-								filter = function(format_client)
-									return format_client.name == "null-ls"
-								end,
-							})
+				-- Keymap to format the buffer manually
+				vim.keymap.set("n", "<leader>f", function()
+					vim.lsp.buf.format({
+						bufnr = bufnr,
+						filter = function(format_client)
+							return format_client.name == "null-ls"
 						end,
 					})
-				end
+				end, { buffer = bufnr, desc = "Format buffer with null-ls" })
 			end,
 		})
 	end,

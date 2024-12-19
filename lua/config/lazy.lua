@@ -33,10 +33,27 @@ require("lazy").setup({
 				vim.cmd.colorscheme("moonfly")
 			end,
 		},
+--  { 
+-- 	"rose-pine/neovim", 
+-- 	name = "rose-pine",
+-- 	config = function()
+-- 		vim.cmd("colorscheme rose-pine")
+-- 	end
+-- },
 		{
 			"christoomey/vim-tmux-navigator",
 			lazy = false,
 		},
+{
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true, -- Default setup
+},
+{
+    'windwp/nvim-ts-autotag', -- For auto-closing tags
+    event = "InsertEnter",
+    opts = {}, -- Use default options
+},
 		-- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
 		{
 			"numToStr/Comment.nvim",
