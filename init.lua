@@ -30,8 +30,8 @@ vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increa
 
 
 -- Move throught the quick list
-vim.keymap.set("n", "<leader>l", "<cmd>cnext<CR>")
-vim.keymap.set("n", "<leader>h", "<cmd>cprev<CR>")
+vim.keymap.set("n", "<leader>]", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<leader>[", "<cmd>cprev<CR>")
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 -- Highlight Yank
@@ -42,6 +42,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+local function set_qf_list()
+  vim.diagnostic.setqflist()      -- Populate quickfix list with diagnostics
+  vim.cmd('copen 15')            -- Open quickfix window with height 15
+end
+
+-- 3. Create keymap for normal mode: <leader>e
+vim.keymap.set('n', '<leader>le', set_qf_list, { desc = 'LSP Diagnostics in Quickfix' })
+
 
 vim.opt.autoindent = true    -- Copy indentation from the previous line
 vim.opt.smartindent = true   -- Add extra indent for new lines in code blocks

@@ -33,13 +33,13 @@ require("lazy").setup({
 				vim.cmd.colorscheme("moonfly")
 			end,
 		},
---  { 
--- 	"rose-pine/neovim", 
--- 	name = "rose-pine",
--- 	config = function()
--- 		vim.cmd("colorscheme rose-pine")
--- 	end
--- },
+ {
+	"rose-pine/neovim", 
+	name = "rose-pine",
+	config = function()
+		vim.cmd("colorscheme rose-pine")
+	end
+},
 		{
 			"christoomey/vim-tmux-navigator",
 			lazy = false,
