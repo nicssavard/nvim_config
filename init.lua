@@ -1,5 +1,5 @@
 require("config.lazy")
-
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 -- Keymaps
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
@@ -36,30 +36,30 @@ vim.keymap.set("n", "<leader>[", "<cmd>cprev<CR>")
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 -- Highlight Yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 local function set_qf_list()
-  vim.diagnostic.setqflist()      -- Populate quickfix list with diagnostics
-  vim.cmd('copen 15')            -- Open quickfix window with height 15
+  vim.diagnostic.setqflist() -- Populate quickfix list with diagnostics
+  vim.cmd('copen 15')        -- Open quickfix window with height 15
 end
 
 -- 3. Create keymap for normal mode: <leader>e
 vim.keymap.set('n', '<leader>le', set_qf_list, { desc = 'LSP Diagnostics in Quickfix' })
 
 
-vim.opt.autoindent = true    -- Copy indentation from the previous line
-vim.opt.smartindent = true   -- Add extra indent for new lines in code blocks
-vim.opt.tabstop = 2          -- Number of spaces for a tab
-vim.opt.shiftwidth = 2       -- Number of spaces for auto-indent
-vim.opt.softtabstop = 2      -- Number of spaces to use for <Tab>
-vim.opt.expandtab = true     -- Use spaces instead of tabs
+vim.opt.autoindent = true  -- Copy indentation from the previous line
+vim.opt.smartindent = true -- Add extra indent for new lines in code blocks
+vim.opt.tabstop = 2        -- Number of spaces for a tab
+vim.opt.shiftwidth = 2     -- Number of spaces for auto-indent
+vim.opt.softtabstop = 2    -- Number of spaces to use for <Tab>
+vim.opt.expandtab = true   -- Use spaces instead of tabs
 
-        vim.api.nvim_set_keymap("n", "<leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
 -- Enable absolute line numbers
 vim.opt.number = true
 
@@ -70,32 +70,32 @@ vim.opt.relativenumber = true
 
 -- Function to check if there are no open buffers other than the default
 local function is_empty_start()
-	return #vim.api.nvim_list_bufs() == 1 and vim.fn.empty(vim.fn.expand('%:t')) == 1
+  return #vim.api.nvim_list_bufs() == 1 and vim.fn.empty(vim.fn.expand('%:t')) == 1
 end
 
 -- Function to set up the custom start screen
 local function setup_start_screen()
-	if is_empty_start() then
-		-- Create a new buffer
-		vim.api.nvim_command('enew')
-		-- Set buffer options
-		vim.api.nvim_buf_set_option(0, 'buftype', 'nofile')
-		vim.api.nvim_buf_set_option(0, 'bufhidden', 'wipe')
-		vim.api.nvim_buf_set_option(0, 'swapfile', false)
-		-- Define your custom message
-		local welcome_message = {
-			"Welcome!",
-		}
-		-- Set the buffer content
-		vim.api.nvim_buf_set_lines(0, 0, -1, false, welcome_message)
-		-- Center the window vertically
-		vim.cmd('normal! zz')
-		-- Make the buffer non-modifiable
-		vim.api.nvim_buf_set_option(0, 'modifiable', false)
-	end
+  if is_empty_start() then
+    -- Create a new buffer
+    vim.api.nvim_command('enew')
+    -- Set buffer options
+    vim.api.nvim_buf_set_option(0, 'buftype', 'nofile')
+    vim.api.nvim_buf_set_option(0, 'bufhidden', 'wipe')
+    vim.api.nvim_buf_set_option(0, 'swapfile', false)
+    -- Define your custom message
+    local welcome_message = {
+      "Welcome!",
+    }
+    -- Set the buffer content
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, welcome_message)
+    -- Center the window vertically
+    vim.cmd('normal! zz')
+    -- Make the buffer non-modifiable
+    vim.api.nvim_buf_set_option(0, 'modifiable', false)
+  end
 end
 
 -- Create an autocommand for VimEnter
 vim.api.nvim_create_autocmd("VimEnter", {
-	callback = setup_start_screen,
+  callback = setup_start_screen,
 })
