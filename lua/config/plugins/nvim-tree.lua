@@ -7,14 +7,14 @@ return {
   },
   config = function()
     require("nvim-tree").setup {
-filters = {
-        dotfiles = false,  -- Show dotfiles
+      filters = {
+        dotfiles = false, -- Show dotfiles
         -- You can add more filter options here if needed
       },
       -- Enable showing of git-ignored files
       git = {
         enable = true,
-        ignore = false,  -- Show git-ignored files
+        ignore = false, -- Show git-ignored files
       },
       renderer = {
         icons = {
@@ -54,6 +54,14 @@ filters = {
     }
   end,
 }
+
+
+
+
+
+
+
+
 -- return {
 --     "nvim-tree/nvim-tree.lua",
 --     version = "*",

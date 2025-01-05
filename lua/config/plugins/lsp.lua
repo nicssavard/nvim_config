@@ -13,23 +13,142 @@ return {
       },
     },
     config = function()
+      -- Retrieve LSP capabilities from blink.cmp
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require("lspconfig").lua_ls.setup { capabilites = capabilities }
+
+      ----------------------------------------------------------------------------
+      -- 1) Lua LS
+      ----------------------------------------------------------------------------
+      require("lspconfig").lua_ls.setup {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+          },
+        },
+      }
+
+      ----------------------------------------------------------------------------
+      -- 2) C/C++ LS
+      ----------------------------------------------------------------------------
+      require("lspconfig").clangd.setup {
+        capabilities = capabilities,
+        cmd = { "clangd", "--background-index" },
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+        root_dir = function(fname)
+          return require('lspconfig.util').root_pattern(
+            '.clangd',
+            '.clang-tidy',
+            '.clang-format',
+            'compile_commands.json',
+            'compile_flags.txt',
+            'configure.ac',
+            '.git'
+          )(fname) or vim.fn.getcwd()
+        end,
+        single_file_support = true,
+      }
+
+      ----------------------------------------------------------------------------
+      -- 3) TypeScript LS
+      ----------------------------------------------------------------------------
+      require("lspconfig").ts_ls.setup {
+        capabilities = capabilities,
+        filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+        root_dir = function(fname)
+          return require('lspconfig.util').root_pattern(
+            'tsconfig.json',
+            'package.json',
+            'jsconfig.json',
+            '.git'
+          )(fname) or vim.fn.getcwd()
+        end,
+      }
+
+      ----------------------------------------------------------------------------
+      -- 4) Elixir LS
+      ----------------------------------------------------------------------------
+      require("lspconfig").elixirls.setup {
+        capabilities = capabilities,
+        cmd = { "elixir-ls" },
+        filetypes = { "elixir", "eelixir" },
+        root_dir = function(fname)
+          return require('lspconfig.util').root_pattern(
+            'mix.exs',
+            '.git'
+          )(fname) or vim.fn.getcwd()
+        end,
+      }
+
+
+      ----------------------------------------------------------------------------
+      -- 4) Java
+      ----------------------------------------------------------------------------
+      require("lspconfig").jdtls.setup {
+        capabilities = capabilities,
+        cmd = { "jdtls" },
+        root_dir = function(fname)
+          return require('lspconfig.util').root_pattern(
+            '.project',
+            '.git',
+            'pom.xml',
+            'build.gradle'
+          )(fname) or vim.fn.getcwd()
+        end,
+        filetypes = { "java" },
+        settings = {
+          java = {
+            signatureHelp = { enabled = true },
+            contentProvider = { preferred = "fernflower" },
+            completion = {
+              favoriteStaticMembers = {
+                "org.assertj.core.api.Assertions.*",
+                "org.junit.jupiter.api.Assertions.*",
+                "org.junit.jupiter.api.Assumptions.*"
+              },
+            },
+          },
+        },
+      }
+      ----------------------------------------------------------------------------
+      -- Keybindings & auto-format on save
+      ----------------------------------------------------------------------------
+      local function set_lsp_keymaps(bufnr)
+        local opts = { noremap = true, silent = true, buffer = bufnr }
+        local keymap = vim.keymap.set
+
+        keymap('n', '<leader>lr', vim.lsp.buf.rename, opts)
+        keymap('n', 'gd', vim.lsp.buf.definition, opts)
+        keymap('n', 'K', vim.lsp.buf.hover, opts)
+        keymap('n', 'gr', vim.lsp.buf.references, opts)
+        keymap('n', 'gD', vim.lsp.buf.declaration, opts)
+        keymap('n', 'gi', vim.lsp.buf.implementation, opts)
+        keymap('n', '<leader>la', vim.lsp.buf.code_action, opts)
+      end
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
-          local c = vim.lsp.get_client_by_id(args.data.client_id)
-          if not c then return end
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client then return end
 
-          if vim.bo.filetype == "lua" then
-            -- Format the current buffer on save
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              buffer = args.buf,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
-              end,
-            })
-          end
+          -- Set up the keymaps
+          set_lsp_keymaps(args.buf)
+
+          -- Auto-format on save
+          -- vim.api.nvim_create_autocmd('BufWritePre', {
+          --   buffer = args.buf,
+          --   callback = function()
+          --     vim.lsp.buf.format({ bufnr = args.buf, async = false })
+          --   end,
+          -- })
         end,
       })
     end,
