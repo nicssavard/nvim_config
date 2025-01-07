@@ -93,10 +93,10 @@ return {
       -- 4) Java
       ----------------------------------------------------------------------------
       require("lspconfig").jdtls.setup {
-        capabilities = capabilities,
-        cmd = { "jdtls" },
+        cmd = { "jdtls" }, -- Ensure 'jdtls' is available in your PATH
         root_dir = function(fname)
           return require('lspconfig.util').root_pattern(
+            'src/main/java',
             '.project',
             '.git',
             'pom.xml',
@@ -106,13 +106,19 @@ return {
         filetypes = { "java" },
         settings = {
           java = {
+            configuration = {
+              runtimes = {
+                -- Specify Java 21 runtime
+                { name = "JavaSE-21", path = "/usr/lib/jvm/java-21-openjdk" }, -- Adjust if the path differs
+              },
+            },
             signatureHelp = { enabled = true },
-            contentProvider = { preferred = "fernflower" },
+            contentProvider = { preferred = "fernflower" }, -- Use fernflower for decompilation
             completion = {
               favoriteStaticMembers = {
                 "org.assertj.core.api.Assertions.*",
                 "org.junit.jupiter.api.Assertions.*",
-                "org.junit.jupiter.api.Assumptions.*"
+                "org.junit.jupiter.api.Assumptions.*",
               },
             },
           },

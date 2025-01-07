@@ -51,12 +51,41 @@ end
 
 M.setup = function()
   vim.keymap.set("n", "<leader>fw", live_multigrep, { desc = "Live Multigrep" })
+
   vim.keymap.set("n", "<leader>fin", function()
     live_multigrep({
       cwd = "/Users/nicolassavard/note/",
       prompt_title = "Multigrep Notes",
     })
   end, { desc = "Live Multigrep in Notes Folder" })
+
+  vim.keymap.set("n", "<leader>fing", function()
+    live_multigrep({
+      cwd = "/Users/nicolassavard/jmap/jmapcloud/jmapcloud-ng/",
+      prompt_title = "Multigrep Notes",
+    })
+  end, { desc = "Live Multigrep in Notes Folder" })
+
+  vim.keymap.set("n", "<leader>fingc", function()
+    live_multigrep({
+      cwd = "/Users/nicolassavard/jmap/jmapcloud/jmapcloud-ng-core/",
+      prompt_title = "Multigrep jmapcloud-ng-core",
+    })
+  end, { desc = "Live Multigrep in jmapcloud-ng-core" })
+
+  vim.keymap.set("n", "<leader>fip", function()
+    live_multigrep({
+      cwd = "/Users/nicolassavard/jmap/jmapcloud/jmapcloud-frontend/app/jmapcloud-portal/",
+      prompt_title = "Multigrep portal",
+    })
+  end, { desc = "Live Multigrep in portal" })
+
+  vim.keymap.set("n", "<leader>fis", function()
+    live_multigrep({
+      cwd = "/Users/nicolassavard/jmap/jmapcloud/jmapcloud-frontend/app/jmapcloud-studio/",
+      prompt_title = "Multigrep studio",
+    })
+  end, { desc = "Live Multigrep in studio" })
 end
 
 return M
