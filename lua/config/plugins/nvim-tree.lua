@@ -16,6 +16,10 @@ return {
         enable = true,
         ignore = false, -- Show git-ignored files
       },
+      update_focused_file = {
+        enable = true,
+        update_root = true,
+      },
       renderer = {
         icons = {
           show = {
@@ -44,6 +48,7 @@ return {
         end
 
         -- Keybindings within nvim-tree buffer
+        vim.keymap.set('n', '<cr>', api.node.open.edit, opts('Open File or Directory'))
         vim.keymap.set('n', 'l', api.node.open.edit, opts('Open File or Directory'))
         vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Parent Directory'))
         vim.keymap.set('n', 'a', api.fs.create, opts('Create File or Directory')) -- Add back create functionality

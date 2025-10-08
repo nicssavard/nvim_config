@@ -13,6 +13,7 @@ vim.keymap.set("n", "grn", vim.lsp.buf.rename, { desc = "Rename" })
 vim.keymap.set("n", "gra", vim.lsp.buf.code_action, { desc = "Code Action" })
 vim.keymap.set("n", "grr", vim.lsp.buf.references, { desc = "References" })
 vim.keymap.set("n", "gl", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show Diagnostics" })
+vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
 
 -- Splits
 vim.keymap.set("n", "<leader>|", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical Split" })
@@ -67,6 +68,9 @@ vim.opt.number = true
 -- Enable relative line numbers
 vim.opt.relativenumber = true
 
+vim.opt.scrolloff = 8
+vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set({ "n", "v" }, "<leader>d", "\"_d")
 -- Lua configuration (e.g., in init.lua or a separate config file)
 
 -- Function to check if there are no open buffers other than the default
@@ -99,4 +103,13 @@ end
 -- Create an autocommand for VimEnter
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = setup_start_screen,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = augroup,
+  pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.lua", "*.py", "*.go", "*.java" },
+  callback = function()
+    -- async=false to block save until formatting is done
+    vim.lsp.buf.format({ async = false })
+  end,
 })
