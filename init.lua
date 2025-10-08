@@ -1,4 +1,6 @@
 require("config.lazy")
+require("config.lsp")
+
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 -- Keymaps
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
