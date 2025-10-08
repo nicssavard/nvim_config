@@ -28,12 +28,6 @@ vim.keymap.set("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = "Increase Window 
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
 
--- Keymap to enable Copilot
-vim.keymap.set('n', '<leader>ce', ':Copilot enable<CR>', { desc = 'Enable Copilot' })
-
--- Keymap to disable Copilot
-vim.keymap.set('n', '<leader>cd', ':Copilot disable<CR>', { desc = 'Disable Copilot' })
-
 -- Move throught the quick list
 vim.keymap.set("n", "<leader>]", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<leader>[", "<cmd>cprev<CR>")
