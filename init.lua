@@ -60,6 +60,8 @@ vim.opt.tabstop = 2        -- Number of spaces for a tab
 vim.opt.shiftwidth = 2     -- Number of spaces for auto-indent
 vim.opt.softtabstop = 2    -- Number of spaces to use for <Tab>
 vim.opt.expandtab = true   -- Use spaces instead of tabs
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 vim.api.nvim_set_keymap("n", "<leader>o", ":NvimTreeFocus<CR>", { noremap = true, silent = true })
 -- Enable absolute line numbers

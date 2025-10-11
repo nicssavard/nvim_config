@@ -1,2 +1,4 @@
 WRN 2025-10-08T05:53:15.823 ?.54826    server_start:193: Failed to start server: operation not permitted: /var/folders/28/gwhtdzjs0y14k1lsvg9dwn640000gn/T/nvim.nicolassavard/CW8x0e/nvim.54826.0
 WRN 2025-10-08T08:33:56.684 ?.60369    server_start:193: Failed to start server: operation not permitted: /var/folders/28/gwhtdzjs0y14k1lsvg9dwn640000gn/T/nvim.nicolassavard/0f5lNa/nvim.60369.0
+WRN 2025-10-11T05:38:57.091 ?.70208    server_start:193: Failed to start server: operation not permitted: /var/folders/28/gwhtdzjs0y14k1lsvg9dwn640000gn/T/nvim.nicolassavard/hCIXJz/nvim.70208.0
+WRN 2025-10-11T05:39:05.713 ?.70215    server_start:193: Failed to start server: operation not permitted: /var/folders/28/gwhtdzjs0y14k1lsvg9dwn640000gn/T/nvim.nicolassavard/9nIKzP/nvimtj.70215.0

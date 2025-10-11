@@ -16,6 +16,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if not client then return end
+
+    -- If blink.cmp is available let it drive completion instead of the
+    -- fallback configuration below.
+    local has_blink = pcall(require, 'blink.cmp')
+    if has_blink then
+      return
+    end
+
     if not client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
       return
     end
