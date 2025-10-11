@@ -11,8 +11,12 @@ vim.lsp.enable('ts_ls')
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
+    local buf = ev.buf
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = buf, desc = 'LSP Go to definition' })
+
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if not (client and client:supports_method(vim.lsp.protocol.Methods.textDocument_completion)) then
+    if not client then return end
+    if not client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
       return
     end
 
