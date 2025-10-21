@@ -6,6 +6,17 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
+    local function set_highlights()
+      vim.api.nvim_set_hl(0, 'NvimTreeModifiedIcon', { fg = '#fbbf24' })
+      vim.api.nvim_set_hl(0, 'NvimTreeGitNew', { fg = '#34d399' })
+      vim.api.nvim_set_hl(0, 'NvimTreeGitDirty', { fg = '#f97316' })
+    end
+
+    set_highlights()
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = set_highlights,
+    })
+
     require("nvim-tree").setup {
       filters = {
         dotfiles = false, -- Show dotfiles
@@ -15,19 +26,32 @@ return {
       git = {
         enable = true,
         ignore = false, -- Show git-ignored files
+        show_on_dirs = true,
+        show_on_open_dirs = true,
+      },
+      modified = {
+        enable = true,
+        show_on_dirs = true,
+        show_on_open_dirs = true,
       },
       update_focused_file = {
         enable = true,
         update_root = true,
       },
       renderer = {
+        highlight_git = true,
+        highlight_modified = "name",
         icons = {
           show = {
             file = false,
             folder = false,
             folder_arrow = false,
-            git = false,
+            git = true,
+            modified = true,
           },
+          -- glyphs = {
+          --   modified = "●",
+          -- },
         },
         indent_markers = {
           enable = false,

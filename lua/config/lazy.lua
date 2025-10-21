@@ -45,6 +45,12 @@ require("lazy").setup({
       event = "InsertEnter",
       opts = {},                -- Use default options
     },
+    {
+      'szw/vim-maximizer',
+      keys = {
+        { '<leader>bz', ':MaximizerToggle<CR>', desc = 'Zoom/Unzoom window' },
+      },
+    },
     -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
     {
       "numToStr/Comment.nvim",
