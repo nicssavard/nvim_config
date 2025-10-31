@@ -26,10 +26,10 @@ vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>", { desc = "Navigate Dow
 vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>", { desc = "Navigate Up" })
 
 -- Neovim Window Resizing with Ctrl + Arrow
-vim.keymap.set("n", "<C-Up>", "<cmd>resize -2<CR>", { desc = "Decrease Window Height" })
-vim.keymap.set("n", "<C-Down>", "<cmd>resize +2<CR>", { desc = "Increase Window Height" })
-vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
-vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
+vim.keymap.set("n", "<C-Up>", "<cmd>resize -4<CR>", { desc = "Decrease Window Height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize +4<CR>", { desc = "Increase Window Height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -4<CR>", { desc = "Decrease Window Width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +4<CR>", { desc = "Increase Window Width" })
 
 -- Move throught the quick list
 vim.keymap.set("n", "<leader>]", "<cmd>cnext<CR>")
