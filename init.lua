@@ -107,11 +107,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
   callback = setup_start_screen,
 })
 
+local format_group = vim.api.nvim_create_augroup("format_on_save", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
-  group = augroup,
-  pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.lua", "*.py", "*.go", "*.java" },
-  callback = function()
-    -- async=false to block save until formatting is done
-    vim.lsp.buf.format({ async = false })
+  group = format_group,
+  pattern = { "*.lua", "*.py", "*.go", "*.java", "*.rs", "*.c", "*.cpp" },
+  -- TypeScript/JavaScript intentionally excluded to avoid blocking on the TS LSP formatter.
+  callback = function(event)
+    local bufnr = event.buf
+    vim.lsp.buf.format({
+      bufnr = bufnr,
+      timeout_ms = 1500,
+    })
   end,
 })

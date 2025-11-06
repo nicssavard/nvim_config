@@ -20,24 +20,6 @@ return {
 
   -- Server-specific configuration documented at
   -- https://github.com/typescript-language-server/typescript-language-server#configuration-options
-  settings = {
-    javascript = {
-      suggest = {
-        completeFunctionCalls = true,
-      },
-    },
-    typescript = {
-      suggest = {
-        completeFunctionCalls = true,
-      },
-      inlayHints = {
-        enumMemberValues = { enabled = true },
-        functionLikeReturnTypes = { enabled = true },
-        parameterNames = { enabled = 'all' },
-        parameterTypes = { enabled = true },
-        propertyDeclarationTypes = { enabled = true },
-        variableTypes = { enabled = true },
-      },
-    },
-  },
+  -- Heavy features such as auto-inserting function calls or inlay hints are left
+  -- off to keep the language server responsive. Re-enable them here if needed.
 }
