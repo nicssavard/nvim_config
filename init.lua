@@ -1,7 +1,9 @@
 require("config.lazy")
 require("config.lsp")
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = "Format buffer" })
 -- Keymaps
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
@@ -110,7 +112,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 local format_group = vim.api.nvim_create_augroup("format_on_save", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = format_group,
-  pattern = { "*.lua", "*.py", "*.go", "*.java", "*.rs", "*.c", "*.cpp" },
+  pattern = { "*.lua", "*.py", "*.go", "*.java", "*.rs", "*.c", "*.cpp", "*.ex", "*.exs" },
   -- TypeScript/JavaScript intentionally excluded to avoid blocking on the TS LSP formatter.
   callback = function(event)
     local bufnr = event.buf

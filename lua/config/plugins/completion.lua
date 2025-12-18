@@ -13,6 +13,11 @@ return {
       end
 
       opts = opts or {}
+      local selection_option = 'manual'
+      local ok, list_config = pcall(require, 'blink.cmp.config.completion.list')
+      if ok and type(list_config.default) == 'table' and type(list_config.default.selection) == 'table' then
+        selection_option = { preselect = false, auto_insert = false }
+      end
 
       opts.appearance = vim.tbl_deep_extend('force', {
         use_nvim_cmp_as_default = true,
@@ -39,7 +44,7 @@ return {
           },
         },
         accept = { auto_brackets = { enabled = false } },
-        list = { selection = 'manual' },
+        list = { selection = selection_option },
         trigger = {
           show_on_keyword = false,
           show_on_trigger_character = false,

@@ -1,0 +1,2 @@
+# Ignore generated Neovim cache bytecode
+.cache/nvimtj/luac/
